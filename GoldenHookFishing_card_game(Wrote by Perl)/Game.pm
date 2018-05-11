@@ -76,11 +76,15 @@ sub start_game {
 		my $defobj = Player->new(@{$self->{players_name}}[$a], $ret[$a]);
 		push @{$self->{player_object_ref}}, $defobj;
 	}
-	print join ' ',"There",(scalar @{$self->{players_name}}),"players in the game:",@{$self->{players_name}}, "Game Begin!  ";
+	print "There ",(scalar @{$self->{players_name}})," players in the game:\n";
+	print join " ",@{$self->{players_name}},"\n\n";
+	print "Game Begin!\n\n";
 	while (1){# it will keep loop until only one player left
 		for ($a = 0;$a < scalar (@{$self->{player_object_ref}}); $a = $a +1){# it will loop for the number of player times
-			print join ' ',"Player",(@{$self->{player_object_ref}}[$a])->{name},"has",((@{$self->{player_object_ref}}[$a])->numCards()),"cards before deal.";
-			print join ' '," ===== Before player's deal==== ",$self->showCards()," ===========================";
+			print join ' ',"Player",(@{$self->{player_object_ref}}[$a])->{name},"has",((@{$self->{player_object_ref}}[$a])->numCards()),"cards before deal.\n";
+			print "===== Before player's deal====\n";
+			print join ' ',$self->showCards();
+			print "\n===================================\n";
 			my $deal = (@{$self->{player_object_ref}}[$a])->dealCards();#get the deal card from the user and push it to the stack array
 			push @{$self->{stackref}},$deal;
 		if ($self->getReturn($deal)!= 0){
@@ -90,11 +94,13 @@ sub start_game {
 				}
 			}
 			print join ' ',(@{$self->{player_object_ref}}[$a])->{name},"==> card",$deal;
-			print join ' '," ===== After player's deal==== ",$self->showCards()," ===========================";
-			print join ' ',"Player",(@{$self->{player_object_ref}}[$a])->{name},"has",((@{$self->{player_object_ref}}[$a])->numCards()),"cards after deal.";
+			print "\n===== After player's deal====\n";
+			print join " ",$self->showCards();
+			print "\n===================================\n";
+			print join ' ',"Player",(@{$self->{player_object_ref}}[$a])->{name},"has",((@{$self->{player_object_ref}}[$a])->numCards()),"cards after deal.\n\n";
 			#for my $c(0..scalar(@{$self->{player_object_ref}})-1){
 				if ((@{$self->{player_object_ref}}[$a])->numCards() == 0){
-					print "Player ",(@{$self->{player_object_ref}}[$a])->{name}," has no card, out!";
+					print "Player ",(@{$self->{player_object_ref}}[$a])->{name}," has no card, out!\n\n";
 					splice (@{$self->{player_object_ref}},$a,1);# if that array numcard is 0, then remove that object from the array.
 					$a = $a +1;#
 				}
@@ -107,7 +113,7 @@ sub start_game {
 	}
 		$self->{counter} = $self->{counter} + 1;
 		if ($self->{userremain} == 1){
-			print " Winner is ",@{$self->{player_object_ref}}[0]->{name}, " in game ",$self->{counter};
+			print "Winner is ",@{$self->{player_object_ref}}[0]->{name}, " in game ",$self->{counter};
 			last;
 	}
 	}
